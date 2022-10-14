@@ -8,35 +8,21 @@ user wants to upgrade. For that Serial communication functionality is added.
 It is better to use serial receive data using interrupts.
 
 */
-#include <stdio.h>
-#include "driver/gpio.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
+
+
 #include "esp_system.h"
 #include "esp_event.h"
-#include "esp_log.h"
 #include "esp_ota_ops.h"
 #include "esp_http_client.h"
 #include "esp_https_ota.h"
-#include "protocol_examples_common.h"
-#include "string.h"
 #include "driver/uart.h"
-#include "esp_bt.h"
-#include "esp_bt_main.h"
-#include "esp_gap_bt_api.h"
-#include "esp_bt_device.h"
-#include "nvs.h"
-#include "nvs_flash.h"
 #include "protocol_examples_common.h"
 #include "esp_wifi.h"
-#include "esp_spp_api.h"
-
 #include <stdio.h>
 #include "esp_log.h"
 #include "driver/i2c.h"
 #include "sdkconfig.h"
 #include <sys/types.h>
-// #include "OLEDDisplay.h"
 #include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
@@ -346,45 +332,45 @@ void app_main(void)
     ESP_ERROR_CHECK(esp_bt_controller_mem_release(ESP_BT_MODE_BLE)); //BT
 
     esp_bt_controller_config_t bt_cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
-    if ((ret = esp_bt_controller_init(&bt_cfg)) != ESP_OK)
+    if ((err = esp_bt_controller_init(&bt_cfg)) != ESP_OK)
     {
-        ESP_LOGE(TAG, "%s initialize controller failed: %s\n", __func__, esp_err_to_name(ret));
+        ESP_LOGE(TAG, "%s initialize controller failed: %s\n", __func__, esp_err_to_name(err));
         return;
     }
 
-    if ((ret = esp_bt_controller_enable(ESP_BT_MODE_CLASSIC_BT)) != ESP_OK)
+    if ((err = esp_bt_controller_enable(ESP_BT_MODE_CLASSIC_BT)) != ESP_OK)
     {
-        ESP_LOGE(TAG, "%s enable controller failed: %s\n", __func__, esp_err_to_name(ret));
+        ESP_LOGE(TAG, "%s enable controller failed: %s\n", __func__, esp_err_to_name(err));
         return;
     }
 
-    if ((ret = esp_bluedroid_init()) != ESP_OK)
+    if ((err = esp_bluedroid_init()) != ESP_OK)
     {
-        ESP_LOGE(TAG, "%s initialize bluedroid failed: %s\n", __func__, esp_err_to_name(ret));
+        ESP_LOGE(TAG, "%s initialize bluedroid failed: %s\n", __func__, esp_err_to_name(err));
         return;
     }
 
-    if ((ret = esp_bluedroid_enable()) != ESP_OK)
+    if ((err = esp_bluedroid_enable()) != ESP_OK)
     {
-        ESP_LOGE(TAG, "%s enable bluedroid failed: %s\n", __func__, esp_err_to_name(ret));
+        ESP_LOGE(TAG, "%s enable bluedroid failed: %s\n", __func__, esp_err_to_name(err));
         return;
     }
 
-    if ((ret = esp_bt_gap_register_callback(esp_bt_gap_cb)) != ESP_OK)
+    if ((err = esp_bt_gap_register_callback(esp_bt_gap_cb)) != ESP_OK)
     {
-        ESP_LOGE(TAG, "%s gap register failed: %s\n", __func__, esp_err_to_name(ret));
+        ESP_LOGE(TAG, "%s gap register failed: %s\n", __func__, esp_err_to_name(err));
         return;
     }
 
-    if ((ret = esp_spp_register_callback(esp_spp_cb)) != ESP_OK)
+    if ((err = esp_spp_register_callback(esp_spp_cb)) != ESP_OK)
     {
-        ESP_LOGE(TAG, "%s spp register failed: %s\n", __func__, esp_err_to_name(ret));
+        ESP_LOGE(TAG, "%s spp register failed: %s\n", __func__, esp_err_to_name(err));
         return;
     }
 
-    if ((ret = esp_spp_init(esp_spp_mode)) != ESP_OK)
+    if ((err = esp_spp_init(esp_spp_mode)) != ESP_OK)
     {
-        ESP_LOGE(TAG, "%s spp init failed: %s\n", __func__, esp_err_to_name(ret));
+        ESP_LOGE(TAG, "%s spp init failed: %s\n", __func__, esp_err_to_name(err));
         return;
     }
 

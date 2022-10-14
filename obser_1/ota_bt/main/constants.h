@@ -28,3 +28,4 @@ static const esp_spp_role_t role_slave = ESP_SPP_ROLE_SLAVE;
 char bt_data[10] = "";
 int ii;
 char value;
+SemaphoreHandle_t print_mux = NULL;
