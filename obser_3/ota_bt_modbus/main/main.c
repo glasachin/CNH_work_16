@@ -2,8 +2,6 @@
 
 #include "constants.h"
 
-
-
 // configuration for LED blinking
 unsigned int state = 1; // To blink LED at PIN2
 
